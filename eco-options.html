@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecosystem Options | Esports Trading</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .opt { position: relative; padding: 110px 0 120px; border-bottom: 2px solid var(--acid); overflow: hidden; }
+    .opt:nth-child(even) { background: var(--bg-2); }
+    .opt__tag { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--fg-2); margin-bottom: 40px; }
+    .opt__tag b { background: var(--acid); color: #000; padding: 6px 10px; font-weight: 700; transform: var(--slant); display: inline-block; }
+    .opt__head { max-width: 640px; margin-bottom: 40px; }
+    .switch { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; gap: 4px; padding: 4px; background: rgba(12,12,14,.85); border: 1px solid var(--line-2); backdrop-filter: blur(16px); }
+    .switch a { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .14em; padding: 10px 14px; color: var(--fg-2); transition: background .3s, color .3s; }
+    .switch a:hover { background: var(--acid); color: #000; }
+    .switch a.back { color: var(--fg-3); }
+    .lbl { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; }
+    .desc { color: var(--fg-2); font-size: 14px; }
+
+    /* ===== 1. SVG radial (exact geometry) ===== */
+    .radial { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .radial svg { width: 100%; max-width: 560px; height: auto; margin-inline: auto; display: block; overflow: visible; }
+    .radial .ring { fill: none; stroke: rgba(255,255,255,.14); stroke-width: 1; stroke-dasharray: 3 4; }
+    .radial .ring2 { fill: none; stroke: rgba(237,252,13,.35); stroke-width: 1; animation: ringPulseSvg 4s ease-in-out infinite; }
+    @keyframes ringPulseSvg { 50% { stroke: rgba(237,252,13,.8); } }
+    .radial .spoke { stroke: rgba(255,255,255,.14); stroke-width: .8; stroke-dasharray: 2 3; }
+    .radial .node { cursor: pointer; }
+    .radial .node circle.frame { fill: none; stroke: rgba(255,255,255,.25); stroke-width: 1.5; transition: stroke .3s; }
+    .radial .node.is-active circle.frame { stroke: var(--acid); stroke-width: 2.5; filter: drop-shadow(0 0 10px rgba(237,252,13,.6)); }
+    .radial .node image { transition: opacity .3s; opacity: .8; }
+    .radial .node.is-active image, .radial .node:hover image { opacity: 1; }
+    .radial .node text { font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 1.6px; text-transform: uppercase; fill: var(--fg); text-anchor: middle; }
+    .radial .node.is-active text { fill: var(--acid); }
+    .radial .node rect.pill { fill: var(--bg); stroke: rgba(255,255,255,.2); }
+    .radial .node.is-active rect.pill { stroke: var(--acid); }
+    .radial .core { filter: drop-shadow(0 0 22px rgba(237,252,13,.5)); }
+    .radial .ripple { fill: none; stroke: var(--acid); stroke-width: 1.5; opacity: 0; }
+    .radial .node.is-active .ripple { animation: rippleSvg 1.8s ease-out infinite; }
+    @keyframes rippleSvg { 0% { r: 40; opacity: .8; } 100% { r: 68; opacity: 0; } }
+    @media (max-width: 900px) { .radial { grid-template-columns: 1fr; } }
+
+    /* ===== 2. Honeycomb ===== */
+    .hive { display: flex; flex-direction: column; align-items: center; margin-top: 10px; --hw: 200px; }
+    .hive__row { display: flex; gap: 10px; }
+    .hive__row + .hive__row { margin-top: calc(var(--hw) * -0.26); }
+    .hex { position: relative; width: var(--hw); height: calc(var(--hw) * 1.155); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: var(--bg-3); overflow: hidden; cursor: pointer; transition: transform .5s var(--ease-out); }
+    .hex:hover { transform: scale(1.06); z-index: 2; }
+    .hex img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) brightness(.6); transition: filter .4s, transform 1s var(--ease-out); }
+    .hex:hover img { filter: saturate(1) brightness(.9); transform: scale(1.08); }
+    .hex::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,11,.9), transparent 60%); }
+    .hex span { position: absolute; left: 0; right: 0; bottom: 30%; text-align: center; z-index: 2; color: var(--fg); }
+    .hex--core { background: var(--acid); display: grid; place-items: center; animation: vsPulse 2.6s var(--ease-io) infinite; }
+    .hex--core img { position: static; width: 46%; height: auto; filter: brightness(0); object-fit: contain; }
+    .hex--core::after { display: none; }
+    @media (max-width: 720px) { .hive { --hw: 150px; } .hex span { font-size: 9px; } }
+    @media (max-width: 500px) { .hive { --hw: 104px; } .hex span { font-size: 7px; letter-spacing: .08em; } }
+
+    /* ===== 3. Spotlight tabs ===== */
+    .spot { display: grid; grid-template-columns: .9fr 1.1fr; gap: 24px; min-height: 560px; }
+    .spot__list { display: flex; flex-direction: column; gap: 6px; }
+    .spot__item { position: relative; display: grid; grid-template-columns: 40px 1fr; gap: 16px; align-items: center; padding: 18px 20px; border: 1px solid var(--line); background: var(--bg); cursor: pointer; overflow: hidden; transition: border-color .3s, background .3s; }
+    .spot__item.is-active { border-color: var(--acid); background: var(--bg-3); }
+    .spot__item i { font-family: var(--font-display); font-size: 11px; letter-spacing: .2em; color: var(--acid); font-style: normal; }
+    .spot__item h3 { font-size: 20px; text-transform: uppercase; font-style: italic; }
+    .spot__item p { grid-column: 2; color: var(--fg-2); font-size: 14px; max-height: 0; overflow: hidden; transition: max-height .6s var(--ease-out), margin .4s; }
+    .spot__item.is-active p { max-height: 80px; margin-top: 6px; }
+    .spot__item::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--acid); transform: scaleX(0); transform-origin: left; }
+    .spot__item.is-active::after { animation: xpBar 4s linear forwards; }
+    .spot__stage { position: relative; overflow: hidden; border: 1px solid var(--line-2); clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px)); }
+    .spot__stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.08); transition: opacity .7s, transform 1.4s var(--ease-out); }
+    .spot__stage img.is-on { opacity: 1; transform: scale(1); }
+    .spot__stage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,11,.9), transparent 50%); }
+    .spot__cap { position: absolute; left: 28px; bottom: 26px; z-index: 2; }
+    .spot__cap b { display: block; font-family: var(--font-display); font-style: italic; font-size: clamp(28px, 3vw, 44px); text-transform: uppercase; color: var(--acid); }
+    @media (max-width: 900px) { .spot { grid-template-columns: 1fr; } .spot__stage { min-height: 320px; } }
+
+    /* ===== 4. Layer stack ===== */
+    .stack { display: flex; flex-direction: column; gap: 4px; }
+    .layer { position: relative; display: grid; grid-template-columns: 60px 1fr 2fr 220px; align-items: center; gap: 24px; height: 84px; padding: 0 22px; border: 1px solid var(--line); background: var(--bg); overflow: hidden; transition: height .6s var(--ease-out), border-color .3s, background .3s; cursor: pointer; }
+    .layer:hover, .layer.is-active { height: 170px; border-color: var(--acid); background: var(--bg-3); }
+    .layer i { font-family: var(--font-display); font-size: 12px; letter-spacing: .2em; color: var(--acid); font-style: normal; }
+    .layer h3 { font-size: clamp(22px, 2.6vw, 34px); text-transform: uppercase; font-style: italic; }
+    .layer p { color: var(--fg-2); font-size: 15px; opacity: .5; transition: opacity .4s; }
+    .layer:hover p, .layer.is-active p { opacity: 1; }
+    .layer__img { position: relative; height: 100%; overflow: hidden; }
+    .layer__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) brightness(.7); transition: transform 1s var(--ease-out), filter .4s; transform: scale(1.1); }
+    .layer:hover .layer__img img, .layer.is-active .layer__img img { transform: scale(1); filter: none; }
+    .layer::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--acid); transform: scaleY(0); transition: transform .5s var(--ease-out); }
+    .layer:hover::before, .layer.is-active::before { transform: scaleY(1); }
+    @media (max-width: 800px) { .layer { grid-template-columns: 40px 1fr 120px; } .layer p { display: none; } }
+
+    /* ===== 5. Flow line ===== */
+    .flow { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; padding-top: 44px; }
+    .flow::before { content: ""; position: absolute; top: 14px; left: 8%; right: 8%; height: 1px; background: repeating-linear-gradient(90deg, var(--line-2) 0 8px, transparent 8px 14px); }
+    .flow__dot { position: absolute; top: 9px; width: 11px; height: 11px; border-radius: 50%; background: var(--acid); box-shadow: 0 0 14px var(--acid); left: 8%; animation: flowDot 9s linear infinite; }
+    @keyframes flowDot { to { left: calc(92% - 11px); } }
+    .fcard { position: relative; aspect-ratio: 3/4.2; overflow: hidden; border: 1px solid var(--line-2); cursor: pointer; transition: transform .5s var(--ease-out), border-color .3s; }
+    .fcard:hover { transform: translateY(-8px); border-color: var(--acid); }
+    .fcard::before { content: ""; position: absolute; top: -44px; left: 50%; width: 1px; height: 44px; background: var(--line-2); }
+    .fcard img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) brightness(.65); transition: transform 1.2s var(--ease-out), filter .4s; transform: scale(1.06); }
+    .fcard:hover img { transform: scale(1); filter: saturate(1) brightness(.9); }
+    .fcard::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,11,.95), rgba(10,10,11,.3) 55%, transparent); }
+    .fcard div { position: absolute; left: 0; right: 0; bottom: 0; padding: 16px; z-index: 2; }
+    .fcard i { font-family: var(--font-display); font-size: 10px; letter-spacing: .2em; color: var(--acid); font-style: normal; }
+    .fcard h3 { font-size: 16px; text-transform: uppercase; font-style: italic; margin: 4px 0 6px; }
+    .fcard p { color: var(--fg-2); font-size: 12.5px; max-height: 0; overflow: hidden; transition: max-height .5s var(--ease-out); }
+    .fcard:hover p { max-height: 90px; }
+    @media (max-width: 1000px) { .flow { grid-template-columns: repeat(3, 1fr); } .flow::before, .flow__dot { display: none; } .fcard::before { display: none; } }
+    @media (max-width: 520px) { .flow { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ===== 6. Mosaic with centre mark ===== */
+    .mosaic { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 260px; gap: 10px; }
+    .mcard { position: relative; overflow: hidden; border: 1px solid var(--line-2); cursor: pointer; }
+    .mcard img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.75) brightness(.55); transition: transform 1.2s var(--ease-out), filter .5s; transform: scale(1.05); }
+    .mcard:hover img { transform: scale(1.12); filter: saturate(1) brightness(.85); }
+    .mcard::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,11,.9), transparent 55%); }
+    .mcard div { position: absolute; left: 0; right: 0; bottom: 0; padding: 20px; z-index: 2; transform: translateY(26px); transition: transform .5s var(--ease-out); }
+    .mcard:hover div { transform: none; }
+    .mcard h3 { font-size: 22px; text-transform: uppercase; font-style: italic; }
+    .mcard p { color: var(--fg-2); font-size: 13.5px; margin-top: 6px; opacity: 0; transition: opacity .4s .1s; }
+    .mcard:hover p { opacity: 1; }
+    .mosaic__core { position: absolute; left: 50%; top: 50%; translate: -50% -50%; z-index: 3; width: 150px; height: 150px; display: grid; place-items: center; background: var(--acid); transform: var(--slant); box-shadow: 0 0 60px var(--acid-glow); animation: vsPulse 2.6s var(--ease-io) infinite; pointer-events: none; }
+    .mosaic__core img { width: 54%; filter: brightness(0); }
+    @media (max-width: 760px) { .mosaic { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; } .mosaic__core { width: 100px; height: 100px; } }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ===== 1 ===== -->
+  <section class="opt" id="e1">
+    <div class="container">
+      <div class="opt__tag"><b>Option 1</b> Radial in SVG: nodes sit exactly on the ring, pixel-precise in every browser</div>
+      <div class="radial">
+        <div>
+          <p class="eyebrow">The Esports Trading ecosystem</p>
+          <h2 class="h2 h2--md">Not one game or platform. <span class="hl">An ecosystem.</span></h2>
+          <p class="lead">Six connected layers. The active node cycles automatically; hover any node to explore.</p>
+          <div class="eco__detail" style="margin-top:28px"><img id="r1img" src="assets/img/trader-portrait.webp" alt=""><div><h3 id="r1t">Traders</h3><p id="r1p">Individual competitors developing their skills and building competitive records.</p></div></div>
+        </div>
+        <svg viewBox="0 0 560 560" id="radialSvg" aria-label="Ecosystem diagram">
+          <defs>
+            <clipPath id="c0"><circle cx="280" cy="60" r="44"/></clipPath>
+            <clipPath id="c1"><circle cx="470.5" cy="170" r="44"/></clipPath>
+            <clipPath id="c2"><circle cx="470.5" cy="390" r="44"/></clipPath>
+            <clipPath id="c3"><circle cx="280" cy="500" r="44"/></clipPath>
+            <clipPath id="c4"><circle cx="89.5" cy="390" r="44"/></clipPath>
+            <clipPath id="c5"><circle cx="89.5" cy="170" r="44"/></clipPath>
+          </defs>
+          <circle class="ring" cx="280" cy="280" r="220"/>
+          <circle class="ring2" cx="280" cy="280" r="120"/>
+          <g class="spokes">
+            <line class="spoke" x1="280" y1="280" x2="280" y2="60"/><line class="spoke" x1="280" y1="280" x2="470.5" y2="170"/><line class="spoke" x1="280" y1="280" x2="470.5" y2="390"/>
+            <line class="spoke" x1="280" y1="280" x2="280" y2="500"/><line class="spoke" x1="280" y1="280" x2="89.5" y2="390"/><line class="spoke" x1="280" y1="280" x2="89.5" y2="170"/>
+          </g>
+          <image class="core" href="assets/logo/icon-transparent.svg" x="235" y="235" width="90" height="90"/>
+          <g class="node is-active" data-img="trader-portrait" data-t="Traders" data-p="Individual competitors developing their skills and building competitive records.">
+            <circle class="ripple" cx="280" cy="60" r="44"/><image href="assets/img/trader-portrait.webp" x="236" y="16" width="88" height="88" preserveAspectRatio="xMidYMid slice" clip-path="url(#c0)"/><circle class="frame" cx="280" cy="60" r="44"/>
+            <rect class="pill" x="238" y="112" width="84" height="22"/><text x="280" y="127">Traders</text>
+          </g>
+          <g class="node" data-img="fmt-team" data-t="Trading Teams" data-p="Organizations bring traders together under a shared identity.">
+            <circle class="ripple" cx="470.5" cy="170" r="44"/><image href="assets/img/fmt-team.webp" x="426.5" y="126" width="88" height="88" preserveAspectRatio="xMidYMid slice" clip-path="url(#c1)"/><circle class="frame" cx="470.5" cy="170" r="44"/>
+            <rect class="pill" x="436.5" y="222" width="68" height="22"/><text x="470.5" y="237">Teams</text>
+          </g>
+          <g class="node" data-img="hands" data-t="Platforms" data-p="Technology enabling structured trading competitions to occur around the world.">
+            <circle class="ripple" cx="470.5" cy="390" r="44"/><image href="assets/img/hands.webp" x="426.5" y="346" width="88" height="88" preserveAspectRatio="xMidYMid slice" clip-path="url(#c2)"/><circle class="frame" cx="470.5" cy="390" r="44"/>
+            <rect class="pill" x="422.5" y="442" width="96" height="22"/><text x="470.5" y="457">Platforms</text>
+          </g>
+          <g class="node" data-img="stage" data-t="Leagues" data-p="Organizations creating seasons, competition structures and championships.">
+            <circle class="ripple" cx="280" cy="500" r="44"/><image href="assets/img/stage.webp" x="236" y="456" width="88" height="88" preserveAspectRatio="xMidYMid slice" clip-path="url(#c3)"/><circle class="frame" cx="280" cy="500" r="44"/>
+            <rect class="pill" x="240" y="552" width="80" height="22"/><text x="280" y="567">Leagues</text>
+          </g>
+          <g class="node" data-img="fmt-tournament" data-t="Tournaments" data-p="Independent and league-sanctioned events bringing competitors together.">
+            <circle class="ripple" cx="89.5" cy="390" r="44"/><image href="assets/img/fmt-tournament.webp" x="45.5" y="346" width="88" height="88" preserveAspectRatio="xMidYMid slice" clip-path="url(#c4)"/><circle class="frame" cx="89.5" cy="390" r="44"/>
+            <rect class="pill" x="30.5" y="442" width="118" height="22"/><text x="89.5" y="457">Tournaments</text>
+          </g>
+          <g class="node" data-img="crowd" data-t="Fans" data-p="Spectators follow traders, teams, rivalries, tournaments and championship events.">
+            <circle class="ripple" cx="89.5" cy="170" r="44"/><image href="assets/img/crowd.webp" x="45.5" y="126" width="88" height="88" preserveAspectRatio="xMidYMid slice" clip-path="url(#c5)"/><circle class="frame" cx="89.5" cy="170" r="44"/>
+            <rect class="pill" x="62.5" y="222" width="54" height="22"/><text x="89.5" y="237">Fans</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2 ===== -->
+  <section class="opt" id="e2">
+    <div class="container">
+      <div class="opt__tag"><b>Option 2</b> Honeycomb: six photo hexagons locked around the mark</div>
+      <div class="opt__head"><p class="eyebrow">The Esports Trading ecosystem</p><h2 class="h2 h2--md">Six cells. <span class="hl">One hive.</span></h2></div>
+      <div class="hive">
+        <div class="hive__row">
+          <div class="hex"><img src="assets/img/trader-portrait.webp" alt=""><span class="lbl">Traders</span></div>
+          <div class="hex"><img src="assets/img/fmt-team.webp" alt=""><span class="lbl">Teams</span></div>
+        </div>
+        <div class="hive__row">
+          <div class="hex"><img src="assets/img/crowd.webp" alt=""><span class="lbl">Fans</span></div>
+          <div class="hex hex--core"><img src="assets/logo/icon-transparent.svg" alt=""></div>
+          <div class="hex"><img src="assets/img/hands.webp" alt=""><span class="lbl">Platforms</span></div>
+        </div>
+        <div class="hive__row">
+          <div class="hex"><img src="assets/img/fmt-tournament.webp" alt=""><span class="lbl">Tournaments</span></div>
+          <div class="hex"><img src="assets/img/stage.webp" alt=""><span class="lbl">Leagues</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3 ===== -->
+  <section class="opt" id="e3">
+    <div class="container">
+      <div class="opt__tag"><b>Option 3</b> Spotlight: list on the left, big photo stage on the right, autoplay</div>
+      <div class="opt__head"><p class="eyebrow">The Esports Trading ecosystem</p><h2 class="h2 h2--md">Every layer, <span class="hl">in the spotlight.</span></h2></div>
+      <div class="spot" id="spot">
+        <div class="spot__list">
+          <div class="spot__item is-active" data-i="0"><i>01</i><h3>Traders</h3><p>Individual competitors developing their skills and building competitive records.</p></div>
+          <div class="spot__item" data-i="1"><i>02</i><h3>Trading Teams</h3><p>Organizations bring traders together under a shared identity.</p></div>
+          <div class="spot__item" data-i="2"><i>03</i><h3>Platforms</h3><p>Technology enabling structured trading competitions around the world.</p></div>
+          <div class="spot__item" data-i="3"><i>04</i><h3>Leagues</h3><p>Organizations creating seasons, competition structures and championships.</p></div>
+          <div class="spot__item" data-i="4"><i>05</i><h3>Tournaments</h3><p>Independent and league-sanctioned events bringing competitors together.</p></div>
+          <div class="spot__item" data-i="5"><i>06</i><h3>Fans</h3><p>Spectators follow traders, teams, rivalries, tournaments and championships.</p></div>
+        </div>
+        <div class="spot__stage">
+          <img src="assets/img/trader-portrait.webp" alt="" class="is-on"><img src="assets/img/fmt-team.webp" alt=""><img src="assets/img/hands.webp" alt=""><img src="assets/img/stage.webp" alt=""><img src="assets/img/fmt-tournament.webp" alt=""><img src="assets/img/crowd.webp" alt="">
+          <div class="spot__cap"><span class="lbl" style="color:var(--fg-3)">Layer 01</span><b id="spotCap">Traders</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4 ===== -->
+  <section class="opt" id="e4">
+    <div class="container">
+      <div class="opt__tag"><b>Option 4</b> Layer stack: six expanding rows, reads like the levels of the sport</div>
+      <div class="opt__head"><p class="eyebrow">The Esports Trading ecosystem</p><h2 class="h2 h2--md">Built in <span class="hl">layers.</span></h2></div>
+      <div class="stack" id="stack">
+        <div class="layer is-active"><i>01</i><h3>Traders</h3><p>Individual competitors developing their skills and building competitive records.</p><div class="layer__img"><img src="assets/img/trader-portrait.webp" alt=""></div></div>
+        <div class="layer"><i>02</i><h3>Teams</h3><p>Organizations bring traders together under a shared identity.</p><div class="layer__img"><img src="assets/img/fmt-team.webp" alt=""></div></div>
+        <div class="layer"><i>03</i><h3>Platforms</h3><p>Technology enabling structured trading competitions to occur around the world.</p><div class="layer__img"><img src="assets/img/hands.webp" alt=""></div></div>
+        <div class="layer"><i>04</i><h3>Leagues</h3><p>Organizations creating seasons, competition structures and championships.</p><div class="layer__img"><img src="assets/img/stage.webp" alt=""></div></div>
+        <div class="layer"><i>05</i><h3>Tournaments</h3><p>Independent and league-sanctioned events bringing competitors together.</p><div class="layer__img"><img src="assets/img/fmt-tournament.webp" alt=""></div></div>
+        <div class="layer"><i>06</i><h3>Fans</h3><p>Spectators follow traders, teams, rivalries, tournaments and championship events.</p><div class="layer__img"><img src="assets/img/crowd.webp" alt=""></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5 ===== -->
+  <section class="opt" id="e5">
+    <div class="container">
+      <div class="opt__tag"><b>Option 5</b> Flow line: six cards on a connected track with a travelling signal</div>
+      <div class="opt__head"><p class="eyebrow">The Esports Trading ecosystem</p><h2 class="h2 h2--md">From trader <span class="hl">to fan.</span></h2></div>
+      <div class="flow">
+        <span class="flow__dot" aria-hidden="true"></span>
+        <div class="fcard"><img src="assets/img/trader-portrait.webp" alt=""><div><i>01</i><h3>Traders</h3><p>Individual competitors building competitive records.</p></div></div>
+        <div class="fcard"><img src="assets/img/fmt-team.webp" alt=""><div><i>02</i><h3>Teams</h3><p>Organizations under a shared identity.</p></div></div>
+        <div class="fcard"><img src="assets/img/hands.webp" alt=""><div><i>03</i><h3>Platforms</h3><p>Technology enabling structured competitions.</p></div></div>
+        <div class="fcard"><img src="assets/img/stage.webp" alt=""><div><i>04</i><h3>Leagues</h3><p>Seasons, structures and championships.</p></div></div>
+        <div class="fcard"><img src="assets/img/fmt-tournament.webp" alt=""><div><i>05</i><h3>Tournaments</h3><p>Events bringing competitors together.</p></div></div>
+        <div class="fcard"><img src="assets/img/crowd.webp" alt=""><div><i>06</i><h3>Fans</h3><p>Spectators following rivalries and champions.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6 ===== -->
+  <section class="opt" id="e6">
+    <div class="container">
+      <div class="opt__tag"><b>Option 6</b> Mosaic: 3x2 photo wall with the mark pinned at the centre seam</div>
+      <div class="opt__head"><p class="eyebrow">The Esports Trading ecosystem</p><h2 class="h2 h2--md">One mark. <span class="hl">Six worlds.</span></h2></div>
+      <div class="mosaic">
+        <div class="mosaic__core" aria-hidden="true"><img src="assets/logo/icon-transparent.svg" alt=""></div>
+        <div class="mcard"><img src="assets/img/trader-portrait.webp" alt=""><div><h3>Traders</h3><p>Individual competitors developing their skills and building records.</p></div></div>
+        <div class="mcard"><img src="assets/img/fmt-team.webp" alt=""><div><h3>Teams</h3><p>Organizations bring traders together under a shared identity.</p></div></div>
+        <div class="mcard"><img src="assets/img/hands.webp" alt=""><div><h3>Platforms</h3><p>Technology enabling structured trading competitions worldwide.</p></div></div>
+        <div class="mcard"><img src="assets/img/stage.webp" alt=""><div><h3>Leagues</h3><p>Seasons, competition structures and championships.</p></div></div>
+        <div class="mcard"><img src="assets/img/fmt-tournament.webp" alt=""><div><h3>Tournaments</h3><p>Independent and league-sanctioned events.</p></div></div>
+        <div class="mcard"><img src="assets/img/crowd.webp" alt=""><div><h3>Fans</h3><p>Spectators follow traders, teams, rivalries and champions.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="switch" aria-label="Ecosystem options">
+    <a href="#e1">01</a><a href="#e2">02</a><a href="#e3">03</a><a href="#e4">04</a><a href="#e5">05</a><a href="#e6">06</a><a href="index.html#ecosystem" class="back">← Site</a>
+  </nav>
+
+  <script>
+    (function () {
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      /* 1 radial svg */
+      const nodes = [...document.querySelectorAll('#radialSvg .node')];
+      let ri = 0, rt;
+      function rshow(i) { ri = i; nodes.forEach((n, k) => n.classList.toggle('is-active', k === i)); const n = nodes[i]; document.getElementById('r1img').src = 'assets/img/' + n.dataset.img + '.webp'; document.getElementById('r1t').textContent = n.dataset.t; document.getElementById('r1p').textContent = n.dataset.p; }
+      function rrun() { clearInterval(rt); if (!reduced) rt = setInterval(() => rshow((ri + 1) % nodes.length), 2600); }
+      nodes.forEach((n, i) => { n.addEventListener('mouseenter', () => { rshow(i); clearInterval(rt); }); n.addEventListener('click', () => rshow(i)); });
+      document.getElementById('radialSvg').addEventListener('mouseleave', rrun); rrun();
+      /* 3 spotlight */
+      const items = [...document.querySelectorAll('.spot__item')], imgs = [...document.querySelectorAll('.spot__stage img')], cap = document.getElementById('spotCap');
+      let si = 0, st;
+      function sshow(i) { si = i; items.forEach((it, k) => it.classList.toggle('is-active', k === i)); imgs.forEach((im, k) => im.classList.toggle('is-on', k === i)); cap.textContent = items[i].querySelector('h3').textContent; cap.previousElementSibling.textContent = 'Layer 0' + (i + 1); }
+      function srun() { clearInterval(st); if (!reduced) st = setInterval(() => sshow((si + 1) % items.length), 4000); }
+      items.forEach((it, i) => it.addEventListener('mouseenter', () => { sshow(i); srun(); })); srun();
+      /* 4 stack */
+      const layers = [...document.querySelectorAll('.layer')]; let li = 0, lt;
+      function lshow(i) { li = i; layers.forEach((l, k) => l.classList.toggle('is-active', k === i)); }
+      function lrun() { clearInterval(lt); if (!reduced) lt = setInterval(() => lshow((li + 1) % layers.length), 2400); }
+      layers.forEach((l, i) => l.addEventListener('mouseenter', () => { lshow(i); clearInterval(lt); }));
+      document.getElementById('stack').addEventListener('mouseleave', lrun); lrun();
+    })();
+  </script>
+</body>
+</html>

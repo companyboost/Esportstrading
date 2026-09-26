@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Options | Esports Trading</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+
+    .opt { position: relative; min-height: 100svh; overflow: hidden; border-bottom: 2px solid var(--acid); display: grid; align-items: center; }
+    .opt__tag { position: absolute; top: 22px; left: var(--gutter); z-index: 20; display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--fg-2); }
+    .opt__tag b { background: var(--acid); color: #000; padding: 6px 10px; font-weight: 700; transform: var(--slant); display: inline-block; }
+    .opt__logo { position: absolute; top: 22px; right: var(--gutter); z-index: 20; height: 22px; }
+    .opt__inner { position: relative; z-index: 5; width: min(1400px, 100% - var(--gutter) * 2); margin-inline: auto; padding: 110px 0 80px; }
+    .opt h1 { font-size: clamp(44px, 6.4vw, 96px); text-transform: uppercase; font-style: italic; letter-spacing: -.03em; line-height: .92; margin: 14px 0 26px; max-width: 12ch; }
+    .opt .lead { max-width: 54ch; }
+    .opt__cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+
+    /* switcher */
+    .switch { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; gap: 4px; padding: 4px; background: rgba(12,12,14,.85); border: 1px solid var(--line-2); backdrop-filter: blur(16px); }
+    .switch a { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .14em; padding: 10px 14px; color: var(--fg-2); transition: background .3s, color .3s; }
+    .switch a:hover, .switch a.is-on { background: var(--acid); color: #000; }
+    .switch a.back { color: var(--fg-3); }
+
+    /* ---- 1 Arena photo + price lines (current) ---- */
+    .o1 .photo, .o3 .photo, .o4 .photo, .o6 .photo { position: absolute; inset: 0; z-index: 0; }
+    .o1 .photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 55%; opacity: .55; filter: saturate(.85); animation: heroZoom 40s ease-in-out infinite alternate; transform-origin: center 60%; }
+    .o1 canvas, .o2 canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+    .o1 canvas { mix-blend-mode: screen; }
+    .o1 .veil, .o4 .veil { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, rgba(10,10,11,.92) 0%, rgba(10,10,11,.7) 40%, rgba(10,10,11,.25) 75%, rgba(10,10,11,.5) 100%), linear-gradient(to bottom, rgba(10,10,11,.75), transparent 30%, transparent 65%, var(--bg)); }
+
+    /* ---- 2 Wireframe grid + candles (original) ---- */
+    .o2 .veil { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(60% 60% at 30% 50%, transparent, rgba(10,10,11,.55) 70%), linear-gradient(to bottom, rgba(10,10,11,.7), transparent 25%, transparent 70%, var(--bg)); }
+
+    /* ---- 3 Split duel ---- */
+    .o3 { background: var(--bg); }
+    .o3 .opt__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .o3 .photo { left: 50%; clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%); }
+    .o3 .photo img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.9); animation: heroZoom 30s ease-in-out infinite alternate; }
+    .o3 .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg), transparent 30%), linear-gradient(to top, var(--bg), transparent 40%); }
+    .o3 .vs { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) var(--slant); z-index: 6; width: 110px; height: 110px; display: grid; place-items: center; background: var(--acid); color: #000; font-family: var(--font-display); font-weight: 700; font-style: italic; font-size: 48px; box-shadow: 0 0 60px var(--acid-glow); animation: vsPulse 2.4s var(--ease-io) infinite; }
+    .o3 .stat { position: absolute; right: var(--gutter); bottom: 60px; z-index: 6; display: flex; gap: 32px; }
+    .o3 .stat div { border-left: 2px solid var(--acid); padding-left: 14px; }
+    .o3 .stat b { display: block; font-family: var(--font-display); font-size: 34px; font-style: italic; }
+    .o3 .stat span { font-family: var(--font-display); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--fg-3); }
+    @media (max-width: 900px) { .o3 .opt__inner { grid-template-columns: 1fr; } .o3 .photo { left: 0; clip-path: none; opacity: .35; } .o3 .vs, .o3 .stat { display: none; } }
+
+    /* ---- 4 Broadcast frame ---- */
+    .o4 .photo img { width: 100%; height: 100%; object-fit: cover; opacity: .7; animation: heroZoom 30s ease-in-out infinite alternate; }
+    .o4 .veil { background: linear-gradient(to bottom, rgba(10,10,11,.8), rgba(10,10,11,.35) 40%, rgba(10,10,11,.85)); }
+    .o4 .scan { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(255,255,255,.04) 0 1px, transparent 1px 4px); mix-blend-mode: overlay; }
+    .o4 .frame { position: absolute; inset: 84px var(--gutter) 70px; z-index: 4; border: 1px solid rgba(255,255,255,.18); pointer-events: none; }
+    .o4 .frame i { position: absolute; width: 22px; height: 22px; border: 2px solid var(--acid); }
+    .o4 .frame i:nth-child(1){top:-2px;left:-2px;border-right:0;border-bottom:0}.o4 .frame i:nth-child(2){top:-2px;right:-2px;border-left:0;border-bottom:0}.o4 .frame i:nth-child(3){bottom:-2px;left:-2px;border-right:0;border-top:0}.o4 .frame i:nth-child(4){bottom:-2px;right:-2px;border-left:0;border-top:0}
+    .o4 .opt__inner { text-align: center; display: flex; flex-direction: column; align-items: center; padding-bottom: 130px; }
+    .o4 h1 { max-width: 16ch; font-size: clamp(48px, 8vw, 128px); }
+    .o4 .lead { text-align: center; }
+    .o4 .hud { position: absolute; z-index: 6; font-family: var(--font-display); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--fg-2); display: flex; gap: 10px; align-items: center; }
+    .o4 .hud.a { top: 100px; left: calc(var(--gutter) + 20px); } .o4 .hud.b { top: 100px; right: calc(var(--gutter) + 20px); } .o4 .hud.c { bottom: 86px; left: calc(var(--gutter) + 20px); } .o4 .hud.d { bottom: 86px; right: calc(var(--gutter) + 20px); }
+    .o4 .rec { width: 10px; height: 10px; border-radius: 50%; background: var(--loss); animation: pulse 1.2s infinite; }
+    .o4 .tick { position: absolute; left: 0; right: 0; bottom: 0; z-index: 6; }
+
+    /* ---- 5 Typographic ---- */
+    .o5 { background: var(--bg); }
+    .o5 .band { position: absolute; left: -10%; right: -10%; top: 50%; height: 26vh; background: var(--acid); transform: translateY(-50%) rotate(-6deg); z-index: 0; }
+    .o5 .ghost { position: absolute; left: 0; right: 0; z-index: 1; pointer-events: none; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); }
+    .o5 .ghost.t { top: 90px; } .o5 .ghost.b { bottom: 40px; }
+    .o5 .ghost div { display: flex; gap: 60px; width: max-content; white-space: nowrap; font-family: var(--font-display); font-weight: 700; font-style: italic; text-transform: uppercase; font-size: clamp(80px, 14vw, 200px); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(244,244,242,.18); animation: ticker 60s linear infinite; }
+    .o5 .ghost.b div { animation-direction: reverse; }
+    .o5 .opt__inner { text-align: center; display: flex; flex-direction: column; align-items: center; padding-bottom: 130px; }
+    .o5 h1 { max-width: 14ch; font-size: clamp(52px, 9vw, 150px); mix-blend-mode: difference; color: #fff; }
+    .o5 h1 .hl { color: #fff; }
+    .o5 .lead { text-align: center; mix-blend-mode: difference; color: #fff; }
+    .o5 .chart { position: absolute; left: 0; right: 0; bottom: 0; height: 40vh; z-index: 2; pointer-events: none; opacity: .9; }
+    .o5 .chart path { fill: none; stroke: var(--acid); stroke-width: 2; stroke-dasharray: 3000; stroke-dashoffset: 3000; animation: draw 6s var(--ease-out) forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+
+    /* ---- 6 Tunnel walk-out ---- */
+    .o6 .photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; opacity: .75; animation: heroZoom 34s ease-in-out infinite alternate; transform-origin: center 40%; }
+    .o6 .veil { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to bottom, rgba(10,10,11,.6), transparent 35%, rgba(10,10,11,.2) 60%, var(--bg)), radial-gradient(60% 50% at 50% 45%, transparent, rgba(10,10,11,.6)); }
+    .o6 .beam { position: absolute; top: -20%; left: 50%; width: 30vw; height: 140%; z-index: 3; background: linear-gradient(to bottom, rgba(237,252,13,.35), transparent 70%); transform-origin: top center; transform: translateX(-50%) rotate(var(--r)); filter: blur(30px); mix-blend-mode: screen; animation: beam 9s ease-in-out infinite alternate; pointer-events: none; }
+    @keyframes beam { from { transform: translateX(-50%) rotate(calc(var(--r) - 6deg)); } to { transform: translateX(-50%) rotate(calc(var(--r) + 6deg)); } }
+    .o6 .opt__inner { display: flex; flex-direction: column; justify-content: flex-end; min-height: 100svh; padding-bottom: 90px; }
+    .o6 h1 { max-width: 16ch; }
+    .o6 .count { position: absolute; top: 100px; right: var(--gutter); z-index: 6; text-align: right; font-family: var(--font-display); }
+    .o6 .count b { display: block; font-size: clamp(48px, 7vw, 110px); font-style: italic; line-height: .9; color: var(--acid); }
+    .o6 .count span { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--fg-2); }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ===== OPTION 1 ===== -->
+  <section class="opt o1" id="o1">
+    <div class="photo"><img src="assets/img/arena-wide.jpg" alt=""></div>
+    <canvas id="c1"></canvas>
+    <div class="veil"></div>
+    <div class="opt__tag"><b>Option 1</b> Arena photo + flowing price lines (current)</div>
+    <img class="opt__logo" src="assets/logo/esports-trading.svg" alt="Esports Trading">
+    <div class="opt__inner">
+      <p class="eyebrow"><span class="eyebrow__tag">New category</span> Competitive trading, built as a sport</p>
+      <h1>The next emerging <span class="hl">Billion Dollar</span> Competitive Sport.</h1>
+      <p class="lead">Esports Trading is where trading skills meet competition. Traders compete head-to-head and in organized events, putting their strategy, market knowledge, skills and decision-making to the test.</p>
+      <div class="opt__cta"><a href="#" class="btn btn--primary btn--lg"><span>Discover Esports Trading</span></a><a href="#" class="btn btn--ghost btn--lg"><span>Explore the League</span></a></div>
+    </div>
+  </section>
+
+  <!-- ===== OPTION 2 ===== -->
+  <section class="opt o2" id="o2">
+    <canvas id="c2"></canvas>
+    <div class="veil"></div>
+    <div class="opt__tag"><b>Option 2</b> 3D wireframe floor + rising candles (first version)</div>
+    <img class="opt__logo" src="assets/logo/esports-trading.svg" alt="Esports Trading">
+    <div class="opt__inner">
+      <p class="eyebrow"><span class="eyebrow__tag">New category</span> Competitive trading, built as a sport</p>
+      <h1>The next emerging <span class="hl">Billion Dollar</span> Competitive Sport.</h1>
+      <p class="lead">Esports Trading is where trading skills meet competition. Traders compete head-to-head and in organized events, putting their strategy, market knowledge, skills and decision-making to the test.</p>
+      <div class="opt__cta"><a href="#" class="btn btn--primary btn--lg"><span>Discover Esports Trading</span></a><a href="#" class="btn btn--ghost btn--lg"><span>Explore the League</span></a></div>
+    </div>
+  </section>
+
+  <!-- ===== OPTION 3 ===== -->
+  <section class="opt o3" id="o3">
+    <div class="photo"><img src="assets/img/fmt-1v1.jpg" alt=""></div>
+    <div class="vs">VS</div>
+    <div class="opt__tag"><b>Option 3</b> Split duel: copy left, face-off photo right</div>
+    <img class="opt__logo" src="assets/logo/esports-trading.svg" alt="Esports Trading">
+    <div class="opt__inner">
+      <div>
+        <p class="eyebrow"><span class="eyebrow__tag">New category</span> Trader vs. trader</p>
+        <h1>Can you beat <span class="hl">another trader?</span></h1>
+        <p class="lead">Esports Trading is where trading skills meet competition. Head-to-head duels, team events, tournaments and leagues. Real markets. Real skill. A whole new game.</p>
+        <div class="opt__cta"><a href="#" class="btn btn--primary btn--lg"><span>Discover Esports Trading</span></a><a href="#" class="btn btn--ghost btn--lg"><span>Explore the League</span></a></div>
+      </div>
+      <div></div>
+    </div>
+    <div class="stat"><div><b>1v1</b><span>Duels</span></div><div><b>Teams</b><span>Standings</span></div><div><b>Live</b><span>Spectated</span></div></div>
+  </section>
+
+  <!-- ===== OPTION 4 ===== -->
+  <section class="opt o4" id="o4">
+    <div class="photo"><img src="assets/img/arena-wide.jpg" alt=""></div>
+    <div class="veil"></div>
+    <div class="scan"></div>
+    <div class="frame"><i></i><i></i><i></i><i></i></div>
+    <div class="hud a"><span class="rec"></span> REC · LIVE BROADCAST</div>
+    <div class="hud b">SEASON 01 <span style="color:var(--acid)">/</span> 2026</div>
+    <div class="hud c">BTC / USD · 1V1 · 15 MIN</div>
+    <div class="hud d">2,418 WATCHING</div>
+    <div class="opt__tag"><b>Option 4</b> Broadcast frame: centred type, HUD corners, scanlines</div>
+    <img class="opt__logo" src="assets/logo/esports-trading.svg" alt="Esports Trading">
+    <div class="opt__inner">
+      <p class="eyebrow eyebrow--center">The market is the arena</p>
+      <h1>Trading is becoming a <span class="hl">competitive sport.</span></h1>
+      <p class="lead">Traders compete head-to-head and in organized events, putting their strategy, market knowledge, skills and decision-making to the test.</p>
+      <div class="opt__cta"><a href="#" class="btn btn--primary btn--lg"><span>Discover Esports Trading</span></a><a href="#" class="btn btn--ghost btn--lg"><span>Explore the League</span></a></div>
+    </div>
+  </section>
+
+  <!-- ===== OPTION 5 ===== -->
+  <section class="opt o5" id="o5">
+    <div class="band"></div>
+    <div class="ghost t"><div><span>Trade</span><span>Compete</span><span>Watch</span><span>Rank</span><span>Trade</span><span>Compete</span><span>Watch</span><span>Rank</span></div></div>
+    <div class="ghost b"><div><span>Esports Trading</span><span>Esports Trading</span><span>Esports Trading</span><span>Esports Trading</span></div></div>
+    <svg class="chart" viewBox="0 0 1440 400" preserveAspectRatio="none"><path d="M0 360 L80 340 L160 350 L240 300 L320 315 L400 250 L480 270 L560 200 L640 230 L720 160 L800 190 L880 120 L960 150 L1040 90 L1120 110 L1200 60 L1280 80 L1360 30 L1440 40"/></svg>
+    <div class="opt__tag"><b>Option 5</b> Pure typography: acid band, outlined marquee, drawn chart</div>
+    <img class="opt__logo" src="assets/logo/esports-trading.svg" alt="Esports Trading">
+    <div class="opt__inner">
+      <p class="eyebrow eyebrow--center">Trade. Compete. Watch. Rank.</p>
+      <h1>The next Billion Dollar <span class="hl">Competitive Sport.</span></h1>
+      <p class="lead">Esports Trading is where trading skills meet competition. This is trading built for competition.</p>
+      <div class="opt__cta"><a href="#" class="btn btn--primary btn--lg"><span>Discover Esports Trading</span></a><a href="#" class="btn btn--ghost btn--lg"><span>Explore the League</span></a></div>
+    </div>
+  </section>
+
+  <!-- ===== OPTION 6 ===== -->
+  <section class="opt o6" id="o6">
+    <div class="photo"><img src="assets/img/fmt-open.jpg" alt=""></div>
+    <div class="veil"></div>
+    <div class="beam" style="--r:-18deg"></div>
+    <div class="beam" style="--r:14deg; animation-delay:-4s"></div>
+    <div class="count"><b data-count="1000000000">$0</b><span>The next industry</span></div>
+    <div class="opt__tag"><b>Option 6</b> Walk-out: tunnel photo, moving light beams, counter</div>
+    <img class="opt__logo" src="assets/logo/esports-trading.svg" alt="Esports Trading">
+    <div class="opt__inner">
+      <p class="eyebrow"><span class="eyebrow__tag">Season 01</span> From trader to competitor</p>
+      <h1>Traders are <span class="hl">athletes.</span></h1>
+      <p class="lead">Markets become the playing field. Strategies become the game plan. Traders become competitors. And competitions create a spectator experience.</p>
+      <div class="opt__cta"><a href="#" class="btn btn--primary btn--lg"><span>Discover Esports Trading</span></a><a href="#" class="btn btn--ghost btn--lg"><span>Explore the League</span></a></div>
+    </div>
+  </section>
+
+  <nav class="switch" aria-label="Hero options">
+    <a href="#o1">01</a><a href="#o2">02</a><a href="#o3">03</a><a href="#o4">04</a><a href="#o5">05</a><a href="#o6">06</a><a href="index.html" class="back">← Site</a>
+  </nav>
+
+  <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
+  <script type="module">
+    import * as THREE from 'three';
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function makeRenderer(canvas) {
+      const r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      r.setPixelRatio(Math.min(devicePixelRatio, 2)); r.setClearColor(0, 0);
+      return r;
+    }
+    function watch(canvas, cb) { let v = false; new IntersectionObserver(([e]) => v = e.isIntersecting, { threshold: .05 }).observe(canvas); return () => v; }
+    function fit(canvas, renderer, camera) { const f = () => { renderer.setSize(canvas.clientWidth, canvas.clientHeight, false); camera.aspect = canvas.clientWidth / canvas.clientHeight; camera.updateProjectionMatrix(); }; addEventListener('resize', f); f(); }
+    const mouse = new THREE.Vector2(), target = new THREE.Vector2();
+    addEventListener('pointermove', e => { target.set(e.clientX / innerWidth * 2 - 1, e.clientY / innerHeight * 2 - 1); }, { passive: true });
+
+    /* ---- scene 1: price lines ---- */
+    if (!reduced) (function () {
+      const canvas = document.getElementById('c1'); const renderer = makeRenderer(canvas);
+      const scene = new THREE.Scene(); const camera = new THREE.PerspectiveCamera(50, 1, .1, 200); camera.position.set(0, .6, 16); fit(canvas, renderer, camera);
+      const R = [ { z:-6,y:1.2,amp:1.6,sp:.9,c:0xEDFC0D,op:.9 }, { z:-3,y:-.4,amp:1.1,sp:1.3,c:0xEDFC0D,op:.55 }, { z:0,y:-2.2,amp:1.4,sp:.7,c:0xFFFFFF,op:.35 }, { z:3,y:2.6,amp:.9,sp:1.1,c:0xEDFC0D,op:.35 }, { z:-10,y:-1.5,amp:2.2,sp:.5,c:0xFFFFFF,op:.18 }, { z:6,y:.4,amp:.7,sp:1.6,c:0xEDFC0D,op:.22 } ];
+      const N = 220, SPAN = 60;
+      const ribbons = R.map((r, i) => { const pos = new Float32Array(N * 3); const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); const line = new THREE.Line(g, new THREE.LineBasicMaterial({ color: r.c, transparent: true, opacity: r.op, blending: THREE.AdditiveBlending, depthWrite: false })); scene.add(line); const pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pos, 3)); scene.add(new THREE.Points(pg, new THREE.PointsMaterial({ color: r.c, size: .22, transparent: true, opacity: r.op * .35, blending: THREE.AdditiveBlending, depthWrite: false }))); return { ...r, pos, g, pg, seed: i * 17.3 }; });
+      const noise = (x, s) => Math.sin(x * .38 + s) * .55 + Math.sin(x * .91 + s * 1.7) * .28 + Math.sin(x * 2.3 + s * .4) * .12 + Math.sin(x * 5.1 + s) * .05;
+      const PN = 420, pp = new Float32Array(PN * 3); for (let i = 0; i < PN; i++) { pp[i*3] = (Math.random()-.5)*70; pp[i*3+1] = (Math.random()-.5)*24; pp[i*3+2] = (Math.random()-.5)*30-4; }
+      const dg = new THREE.BufferGeometry(); dg.setAttribute('position', new THREE.BufferAttribute(pp, 3)); const dust = new THREE.Points(dg, new THREE.PointsMaterial({ color: 0xEDFC0D, size: .06, transparent: true, opacity: .5, depthWrite: false, blending: THREE.AdditiveBlending })); scene.add(dust);
+      const vis = watch(canvas); const clock = new THREE.Clock();
+      (function f() { requestAnimationFrame(f); if (!vis()) return; const t = clock.getElapsedTime(); mouse.lerp(target, .04);
+        for (const r of ribbons) { const sh = t * r.sp; for (let i = 0; i < N; i++) { const u = i / (N - 1), x = (u - .5) * SPAN; r.pos[i*3] = x; r.pos[i*3+1] = r.y + noise(x * .5 + sh, r.seed) * r.amp + Math.sin(u * Math.PI) * .2; r.pos[i*3+2] = r.z + Math.sin(x * .12 + sh * .3 + r.seed) * 1.2; } r.g.attributes.position.needsUpdate = true; r.pg.attributes.position.needsUpdate = true; }
+        dust.rotation.y = t * .015; camera.position.x += (mouse.x * 1.4 - camera.position.x) * .03; camera.position.y += (.6 - mouse.y * .9 - camera.position.y) * .03; camera.lookAt(0, 0, -2); renderer.render(scene, camera); })();
+    })();
+
+    /* ---- scene 2: grid + candles ---- */
+    if (!reduced) (function () {
+      const canvas = document.getElementById('c2'); const renderer = makeRenderer(canvas);
+      const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(0x0a0a0b, .055);
+      const camera = new THREE.PerspectiveCamera(55, 1, .1, 200); camera.position.set(0, 3.2, 12); fit(canvas, renderer, camera);
+      const ACID = new THREE.Color('#EDFC0D'), WHITE = new THREE.Color('#F4F4F2'), LOSS = new THREE.Color('#FF3B5C');
+      const fg = new THREE.PlaneGeometry(90, 90, 60, 60); fg.rotateX(-Math.PI / 2);
+      const fm = new THREE.ShaderMaterial({ transparent: true, wireframe: true, uniforms: { uTime: { value: 0 }, uColor: { value: ACID } },
+        vertexShader: `uniform float uTime; varying float vH; varying float vDist; void main(){ vec3 p = position; float d = length(p.xz); float w = sin(p.x*0.35+uTime*0.8)*cos(p.z*0.3-uTime*0.6)*0.45; w += sin(d*0.6-uTime*1.4)*0.35; p.y += w-1.2; vH=w; vDist=d; gl_Position = projectionMatrix*modelViewMatrix*vec4(p,1.0);} `,
+        fragmentShader: `uniform vec3 uColor; varying float vH; varying float vDist; void main(){ float a = smoothstep(42.0,6.0,vDist)*0.55; float g = smoothstep(-0.2,0.8,vH); vec3 c = mix(vec3(0.55), uColor, g); gl_FragColor = vec4(c, a*(0.25+g*0.5)); }` });
+      scene.add(new THREE.Mesh(fg, fm));
+      const COUNT = 140; const cg = new THREE.BoxGeometry(.22, 1, .22); cg.translate(0, .5, 0);
+      const candles = new THREE.InstancedMesh(cg, new THREE.MeshBasicMaterial({ transparent: true, opacity: .85 }), COUNT); candles.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(COUNT * 3), 3); scene.add(candles);
+      const seeds = Array.from({ length: COUNT }, () => ({ x: (Math.random()-.5)*40, z: -Math.random()*40+4, h: .4+Math.random()*2.2, ph: Math.random()*6.28, sp: .4+Math.random()*.9, up: Math.random() > .35 }));
+      const dummy = new THREE.Object3D(), tmp = new THREE.Color();
+      const PN = 600, pp = new Float32Array(PN * 3); for (let i = 0; i < PN; i++) { pp[i*3] = (Math.random()-.5)*60; pp[i*3+1] = Math.random()*14-2; pp[i*3+2] = (Math.random()-.5)*60-10; }
+      const pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pp, 3)); const parts = new THREE.Points(pg, new THREE.PointsMaterial({ color: 0xEDFC0D, size: .07, transparent: true, opacity: .55, depthWrite: false })); scene.add(parts);
+      const vis = watch(canvas); const clock = new THREE.Clock();
+      (function f() { requestAnimationFrame(f); if (!vis()) return; const t = clock.getElapsedTime(); mouse.lerp(target, .04); fm.uniforms.uTime.value = t;
+        for (let i = 0; i < COUNT; i++) { const s = seeds[i]; const pulse = Math.sin(t*s.sp+s.ph); const h = s.h*(.55+.45*pulse); const y = Math.sin(s.x*.35+t*.8)*Math.cos(s.z*.3-t*.6)*.45 + Math.sin(Math.hypot(s.x,s.z)*.6-t*1.4)*.35 - 1.2; dummy.position.set(s.x, y, s.z); dummy.scale.set(1, h, 1); dummy.updateMatrix(); candles.setMatrixAt(i, dummy.matrix); tmp.copy((pulse > -.2 ? s.up : !s.up) ? ACID : LOSS).lerp(WHITE, .15); candles.setColorAt(i, tmp); }
+        candles.instanceMatrix.needsUpdate = true; candles.instanceColor.needsUpdate = true; parts.rotation.y = t * .02;
+        camera.position.x += (mouse.x*1.6 - camera.position.x)*.03; camera.position.y += (3.2 - mouse.y*.8 - camera.position.y)*.03; camera.lookAt(0, .6, -6); renderer.render(scene, camera); })();
+    })();
+
+    /* ---- option 6 counter ---- */
+    const cnt = document.querySelector('[data-count]');
+    if (cnt) new IntersectionObserver(([e]) => { if (!e.isIntersecting) return; const end = +cnt.dataset.count, t0 = performance.now(); (function step(now) { const p = Math.min(1, (now - t0) / 2400), v = Math.round(end * (1 - Math.pow(1 - p, 3))); cnt.textContent = '$' + (v >= 1e9 ? (v/1e9).toFixed(1) + 'B' : v >= 1e6 ? Math.round(v/1e6) + 'M' : v.toLocaleString()); if (p < 1) requestAnimationFrame(step); })(t0); }, { threshold: .4 }).observe(cnt);
+
+    /* ---- switcher highlight ---- */
+    const links = [...document.querySelectorAll('.switch a[href^="#"]')];
+    new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle('is-on', a.getAttribute('href') === '#' + e.target.id)); }), { threshold: .5 }).observe && document.querySelectorAll('.opt').forEach(s => new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle('is-on', a.getAttribute('href') === '#' + e.target.id)); }), { threshold: .5 }).observe(s));
+  </script>
+</body>
+</html>

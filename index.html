@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esports Trading | The Next Billion Dollar Competitive Sport</title>
+  <meta name="description" content="Esports Trading is where trading skill meets competition. Traders compete head-to-head, in teams, tournaments and leagues. Trade. Compete. Watch. Rank.">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+  <link rel="apple-touch-icon" href="assets/logo/icon.png">
+  <link rel="canonical" href="https://esportstrading.com/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0A0A0B">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Esports Trading">
+  <meta property="og:url" content="https://esportstrading.com/">
+  <meta property="og:title" content="Esports Trading | The Next Billion Dollar Competitive Sport">
+  <meta property="og:description" content="Esports Trading is where trading skill meets competition. Traders compete head-to-head, in teams, tournaments and leagues. Trade. Compete. Watch. Rank.">
+  <meta property="og:image" content="https://esportstrading.com/assets/img/arena-wide.jpg">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1028">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Esports Trading | The Next Billion Dollar Competitive Sport">
+  <meta name="twitter:description" content="Where trading skill meets competition. Trade. Compete. Watch. Rank.">
+  <meta name="twitter:image" content="https://esportstrading.com/assets/img/arena-wide.jpg">
+  <link rel="preload" as="image" href="assets/img/fmt-open.webp" fetchpriority="high">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"Organization","@id":"https://esportstrading.com/#org","name":"Esports Trading","url":"https://esportstrading.com/","logo":"https://esportstrading.com/assets/logo/esports-trading.png","sameAs":["https://www.esportstradingleagues.com/"]},
+    {"@type":"WebSite","@id":"https://esportstrading.com/#site","url":"https://esportstrading.com/","name":"Esports Trading","publisher":{"@id":"https://esportstrading.com/#org"}},
+    {"@type":"WebPage","url":"https://esportstrading.com/","name":"Esports Trading | The Next Billion Dollar Competitive Sport","isPartOf":{"@id":"https://esportstrading.com/#site"},"description":"Esports Trading is where trading skill meets competition. Traders compete head-to-head, in teams, tournaments and leagues."}
+  ]}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=202609262121">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#top" class="nav__logo" aria-label="Esports Trading home">
+        <img src="assets/logo/esports-trading.svg" alt="Esports Trading">
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#what" data-i="01">What is it</a>
+        <a href="#how" data-i="02">How it works</a>
+        <a href="#ecosystem" data-i="03">Ecosystem</a>
+        <a href="#league" data-i="04">League</a>
+        <a href="#formats" data-i="05">Formats</a>
+        <a href="#news" data-i="06">News</a>
+        <span class="nav__pill" aria-hidden="true"></span>
+      </nav>
+
+      <div class="nav__actions">
+        <a href="#updates" class="btn btn--primary btn--sm"><span>Join the Movement</span></a>
+        <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav__mobile" id="mobileMenu">
+      <a href="#what"><i>01</i>What is it</a>
+      <a href="#how"><i>02</i>How it works</a>
+      <a href="#ecosystem"><i>03</i>Ecosystem</a>
+      <a href="#league"><i>04</i>League</a>
+      <a href="#formats"><i>05</i>Formats</a>
+      <a href="#news"><i>06</i>News</a>
+      <a href="#updates" class="btn btn--primary"><span>Join the Movement</span></a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <div class="hero__photo" id="heroPhoto" aria-hidden="true"><img fetchpriority="high" decoding="async" width="900" height="1200" src="assets/img/fmt-open.webp" alt=""></div>
+      <div class="hero__haze" aria-hidden="true"></div>
+      <div class="hero__beam" style="--r:-18deg" aria-hidden="true"></div>
+      <div class="hero__beam" style="--r:14deg; animation-delay:-4s" aria-hidden="true"></div>
+      <div class="hero__beam hero__beam--sweep" aria-hidden="true"></div>
+      <canvas id="arena" class="hero__canvas" aria-hidden="true"></canvas>
+      <div class="hero__vignette" aria-hidden="true"></div>
+      <div class="hero__count reveal" data-delay="900" aria-label="The next billion dollar industry">
+        <b id="heroCount" data-count="1000000000">$0</b>
+        <span>The next industry</span>
+      </div>
+
+      <div class="hero__hud hero__hud--tr" aria-hidden="true">
+        SEASON 01 <span class="sep">/</span> 2026
+      </div>
+
+      <div class="hero__content">
+        <p class="eyebrow reveal" data-delay="0">
+          <span class="eyebrow__tag">New category</span>
+          Competitive trading, built as a sport
+        </p>
+        <h1 class="hero__title">
+          <span class="line"><span class="word reveal-up">The next</span></span>
+          <span class="line"><span class="word reveal-up">emerging</span></span>
+          <span class="line"><span class="word reveal-up hl">Billion Dollar</span></span>
+          <span class="line"><span class="word reveal-up">Competitive Sport.</span></span>
+        </h1>
+        <p class="hero__lead reveal" data-delay="500">
+          Esports Trading is where trading skills meet competition. Traders compete head-to-head and in organized events, putting their strategy, market knowledge, skills and decision-making to the test.
+        </p>
+        <div class="hero__cta reveal" data-delay="650">
+          <a href="#what" class="btn btn--primary btn--lg"><span>Discover Esports Trading</span></a>
+          <a href="#league" class="btn btn--ghost btn--lg"><span>Explore the League</span></a>
+        </div>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <i></i>
+      </div>
+    </section>
+
+    <!-- ============ TICKER ============ -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span>Trade</span><i>◆</i><span>Compete</span><i>◆</i><span>Watch</span><i>◆</i><span>Rank</span><i>◆</i>
+        <span>Trade</span><i>◆</i><span>Compete</span><i>◆</i><span>Watch</span><i>◆</i><span>Rank</span><i>◆</i>
+        <span>Trade</span><i>◆</i><span>Compete</span><i>◆</i><span>Watch</span><i>◆</i><span>Rank</span><i>◆</i>
+        <span>Trade</span><i>◆</i><span>Compete</span><i>◆</i><span>Watch</span><i>◆</i><span>Rank</span><i>◆</i>
+      </div>
+    </div>
+
+    <!-- ============ WELCOME ============ -->
+    <section class="welcome" id="how">
+      <div class="container welcome__grid">
+        <figure class="welcome__photo reveal">
+          <img decoding="async" width="1200" height="1600" src="assets/img/trader-portrait.webp" alt="A competitor at their trading terminal" loading="lazy">
+          <div class="welcome__scan" aria-hidden="true"></div>
+          <figcaption><span class="dot"></span> Competitor booth</figcaption>
+        </figure>
+        <div class="welcome__copy">
+          <p class="eyebrow reveal">Welcome to the next era of competitive trading</p>
+          <h2 class="h2 h2--md reveal">For decades, trading has been an individual pursuit. <em>Esports Trading changes that.</em></h2>
+          <p class="lead reveal">Instead of simply trading against the market, competitors test their skills against other traders through structured competitions, PvP duels, team events, tournaments and leagues.</p>
+          <ul class="steps" aria-label="Trade, Compete, Watch, Rank">
+            <li class="reveal" data-delay="0"><span class="steps__num">01</span><span class="steps__w">Trade</span><span class="steps__d">Real markets. Real skill.</span></li>
+            <li class="reveal" data-delay="80"><span class="steps__num">02</span><span class="steps__w">Compete</span><span class="steps__d">Duels, teams, tournaments.</span></li>
+            <li class="reveal" data-delay="160"><span class="steps__num">03</span><span class="steps__w">Watch</span><span class="steps__d">Markets become a spectator sport.</span></li>
+            <li class="reveal" data-delay="240"><span class="steps__num">04</span><span class="steps__w">Rank</span><span class="steps__d">Records, streaks, championships.</span></li>
+          </ul>
+          <p class="welcome__tag reveal">This is trading built for competition.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHAT IS ============ -->
+    <section class="what" id="what">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow reveal">A new category, a global opportunity</p>
+          <h2 class="h2 h2--md reveal">What is <span class="hl">Esports Trading?</span></h2>
+          <p class="lead reveal">An emerging category of competitive trading that transforms solo market participation into competitions. Competitors face one another individually or as part of a team, with results determined by predefined rules and measurable trading performance.</p>
+        </div>
+
+        <div class="bento">
+          <article class="bento__card bento__card--xl reveal" data-delay="0">
+            <img decoding="async" width="900" height="1200" src="assets/img/fmt-1v1.webp" alt="" loading="lazy">
+            <div class="bento__body">
+              <span class="bento__idx">01</span>
+              <h3>Head-to-Head</h3>
+              <p>Trader vs. Trader competitions put individual strategies against each other.</p>
+            </div>
+            <div class="bento__vs" aria-hidden="true">VS</div>
+          </article>
+
+          <article class="bento__card reveal" data-delay="80">
+            <img decoding="async" width="900" height="1200" src="assets/img/fmt-team.webp" alt="" loading="lazy">
+            <div class="bento__body">
+              <span class="bento__idx">02</span>
+              <h3>Team Competition</h3>
+              <p>Trading teams compete against other organizations.</p>
+            </div>
+          </article>
+
+          <article class="bento__card bento__card--dark reveal" data-delay="160">
+            <svg class="bracket" viewBox="0 0 300 200" aria-hidden="true" data-stage="1">
+              <g class="bracket__r bracket__r1">
+                <rect x="4" y="22" width="16" height="16"/><rect x="4" y="82" width="16" height="16"/><rect x="4" y="132" width="16" height="16"/><rect x="4" y="182" width="16" height="16"/>
+                <path d="M20 30 H70 V60 H120"/><path d="M20 90 H70 V60"/><path d="M20 140 H70 V170 H120"/><path d="M20 190 H70 V170"/>
+              </g>
+              <g class="bracket__r bracket__r2"><path d="M120 60 H170 V115 H220"/><path d="M120 170 H170 V115"/></g>
+              <g class="bracket__r bracket__r3"><path d="M220 115 H280"/><circle class="bracket__win" cx="284" cy="115" r="8"/></g>
+            </svg>
+            <div class="bento__body">
+              <span class="bento__idx">03</span>
+              <h3>Tournaments</h3>
+              <p>Structured brackets and events bring competitors together to determine champions.</p>
+            </div>
+          </article>
+
+          <article class="bento__card bento__card--wide reveal" data-delay="240">
+            <img decoding="async" width="1400" height="933" src="assets/img/crowd.webp" alt="" loading="lazy">
+            <div class="bento__body">
+              <span class="bento__idx">04</span>
+              <h3>Live Spectating</h3>
+              <p>Audiences follow competitions, watch strategies unfold, and experience markets from a new perspective.</p>
+            </div>
+          </article>
+
+          <article class="bento__card bento__card--dark bento__card--board reveal" data-delay="320">
+            <ol class="board" id="board" aria-hidden="true">
+              <li><span>1</span><b>KAIROS</b><i>+12.4%</i></li>
+              <li><span>2</span><b>NOVA_7</b><i>+11.9%</i></li>
+              <li><span>3</span><b>ATLAS</b><i>+9.7%</i></li>
+              <li><span>4</span><b>REDLINE</b><i>+8.2%</i></li>
+            </ol>
+            <div class="bento__body">
+              <span class="bento__idx">05</span>
+              <h3>Rankings</h3>
+              <p>Measurable records, rankings, streaks and player histories.</p>
+            </div>
+          </article>
+
+          <article class="bento__card bento__card--wide reveal" data-delay="400">
+            <img decoding="async" width="900" height="1200" src="assets/img/trophy.webp" alt="" loading="lazy">
+            <div class="bento__body">
+              <span class="bento__idx">06</span>
+              <h3>Championships</h3>
+              <p>The strongest advance through organized competition toward major events and championship titles.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TRADER TO COMPETITOR ============ -->
+    <section class="versus" id="versus">
+      <div class="container">
+        <p class="eyebrow eyebrow--center reveal">From trader to competitor</p>
+        <h2 class="h2 h2--md h2--center reveal">Two questions. <span class="hl">One new sport.</span></h2>
+      </div>
+      <div class="duelwall reveal" id="duelwall">
+        <a class="duelwall__side" href="#what">
+          <img decoding="async" width="1000" height="1333" src="assets/img/market-wall.webp" alt="" loading="lazy">
+          <div class="duelwall__body">
+            <span class="duelwall__label">Traditional trading asks</span>
+            <p class="duelwall__q">“Can you beat <em>the market?</em>”</p>
+          </div>
+        </a>
+        <div class="duelwall__vs" aria-hidden="true"><span>VS</span></div>
+        <a class="duelwall__side duelwall__side--hot" href="#formats">
+          <img decoding="async" width="1000" height="1333" src="assets/img/trader-face.webp" alt="" loading="lazy">
+          <div class="duelwall__body">
+            <span class="duelwall__label">Esports Trading asks</span>
+            <p class="duelwall__q">“Can you beat <em>another trader?</em>”</p>
+          </div>
+        </a>
+      </div>
+      <div class="container">
+        <ul class="becomes">
+          <li class="reveal" data-delay="0"><span>Markets</span><svg viewBox="0 0 60 12"><path d="M0 6 H52 M46 1 L52 6 L46 11"/></svg><strong>The playing field</strong></li>
+          <li class="reveal" data-delay="100"><span>Strategies</span><svg viewBox="0 0 60 12"><path d="M0 6 H52 M46 1 L52 6 L46 11"/></svg><strong>The game plan</strong></li>
+          <li class="reveal" data-delay="200"><span>Traders</span><svg viewBox="0 0 60 12"><path d="M0 6 H52 M46 1 L52 6 L46 11"/></svg><strong>Competitors</strong></li>
+          <li class="reveal" data-delay="300"><span>Competitions</span><svg viewBox="0 0 60 12"><path d="M0 6 H52 M46 1 L52 6 L46 11"/></svg><strong class="hl">A spectator sport</strong></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ ECOSYSTEM ============ -->
+    <section class="eco" id="ecosystem">
+      <div class="container eco__grid">
+        <div class="eco__copy">
+          <p class="eyebrow reveal">The Esports Trading ecosystem</p>
+          <h2 class="h2 h2--md reveal">Not one game or platform. <span class="hl">An ecosystem.</span></h2>
+          <p class="lead reveal">Six connected layers, each one making the others stronger. Hover a cell to explore.</p>
+          <div class="eco__detail reveal" id="ecoDetail">
+            <img decoding="async" width="1200" height="1600" src="assets/img/trader-portrait.webp" alt="" id="ecoImg">
+            <div>
+              <h3 id="ecoTitle">Traders</h3>
+              <p id="ecoText">Individual competitors developing their skills and building competitive records.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hive reveal" id="hive" aria-label="Ecosystem layers">
+          <div class="hive__row">
+            <button class="hex is-active" data-img="trader-portrait" data-title="Traders" data-text="Individual competitors developing their skills and building competitive records."><img decoding="async" width="1200" height="1600" src="assets/img/trader-portrait.webp" alt="" loading="lazy"><span class="lbl">Traders</span></button>
+            <button class="hex" data-img="fmt-team" data-title="Trading Teams" data-text="Organizations bring traders together under a shared identity."><img decoding="async" width="900" height="1200" src="assets/img/fmt-team.webp" alt="" loading="lazy"><span class="lbl">Teams</span></button>
+          </div>
+          <div class="hive__row">
+            <button class="hex" data-img="crowd" data-title="Fans" data-text="Spectators follow traders, teams, rivalries, tournaments and championship events."><img decoding="async" width="1400" height="933" src="assets/img/crowd.webp" alt="" loading="lazy"><span class="lbl">Fans</span></button>
+            <div class="hex hex--core" aria-hidden="true"><img src="assets/logo/icon-transparent.svg" alt=""></div>
+            <button class="hex" data-img="hands" data-title="Platforms" data-text="Technology enabling structured trading competitions to occur around the world."><img decoding="async" width="1000" height="666" src="assets/img/hands.webp" alt="" loading="lazy"><span class="lbl">Platforms</span></button>
+          </div>
+          <div class="hive__row">
+            <button class="hex" data-img="fmt-tournament" data-title="Tournaments" data-text="Independent and league-sanctioned events bringing competitors together."><img decoding="async" width="900" height="1200" src="assets/img/fmt-tournament.webp" alt="" loading="lazy"><span class="lbl">Tournaments</span></button>
+            <button class="hex" data-img="stage" data-title="Leagues" data-text="Organizations creating seasons, competition structures and championships."><img decoding="async" width="1800" height="1012" src="assets/img/stage.webp" alt="" loading="lazy"><span class="lbl">Leagues</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LEAGUE ============ -->
+    <section class="league" id="league">
+      <div class="league__bg" aria-hidden="true"><img decoding="async" width="1800" height="1012" src="assets/img/stage.webp" alt="" loading="lazy"></div>
+      <div class="container">
+        <div class="league__grid">
+          <div class="league__copy reveal">
+            <img class="league__lockup" src="assets/partners/etl.svg" alt="Esports Trading League">
+            <p class="eyebrow">Organized competition. Common standards. Championship events.</p>
+            <h2 class="h2 h2--md">The league behind <span class="hl">the sport.</span></h2>
+            <p class="lead">The Esports Trading League (ETL) is being developed to provide structure for organized competitive trading: transparent competition standards, consistent rules, player and team structures, rankings, sanctioned events and championship competition.</p>
+            <a href="https://www.esportstradingleagues.com/" target="_blank" rel="noopener" class="btn btn--primary btn--lg"><span>Visit Esports Trading League</span><i>→</i></a>
+          </div>
+
+          <div class="league__panel reveal" data-delay="150">
+            <div class="league__stats">
+              <div><b data-count="32">0</b><span>Teams</span></div>
+              <div><b data-count="2">0</b><span>Leagues</span></div>
+              <div><b data-count="1">0</b><span>Championship</span></div>
+            </div>
+            <div class="bracket__legend" aria-hidden="true">
+              <span data-legend="1">Round 1</span><span data-legend="2">Semi-finals</span><span data-legend="3">Final</span><span data-legend="4">Champion</span>
+            </div>
+            <svg class="bracket bracket--lg" viewBox="0 0 400 240" aria-hidden="true" data-stage="1">
+              <g class="bracket__r bracket__r1">
+                <rect x="0" y="12" width="10" height="16"/><rect x="0" y="62" width="10" height="16"/><rect x="0" y="112" width="10" height="16"/><rect x="0" y="162" width="10" height="16"/>
+                <rect x="390" y="12" width="10" height="16"/><rect x="390" y="62" width="10" height="16"/><rect x="390" y="112" width="10" height="16"/><rect x="390" y="162" width="10" height="16"/>
+                <path d="M10 20 H60 V45 H110"/><path d="M10 70 H60 V45"/><path d="M10 120 H60 V145 H110"/><path d="M10 170 H60 V145"/>
+                <path d="M390 20 H340 V45 H290"/><path d="M390 70 H340 V45"/><path d="M390 120 H340 V145 H290"/><path d="M390 170 H340 V145"/>
+              </g>
+              <g class="bracket__r bracket__r2">
+                <path d="M110 45 H160 V95 H210"/><path d="M110 145 H160 V95"/><path d="M290 45 H240 V95 H210"/><path d="M290 145 H240 V95"/>
+              </g>
+              <g class="bracket__r bracket__r3"><path d="M200 95 V220"/></g>
+              <g class="bracket__r bracket__r4"><circle class="bracket__win" cx="200" cy="228" r="9"/></g>
+            </svg>
+            <ul class="league__pills" aria-label="League features">
+              <li>Transparent standards</li><li>Consistent rules</li><li>Rankings</li><li>Sanctioned events</li><li>ETPS score</li><li>Championships</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FORMATS ============ -->
+    <section class="formats" id="formats">
+      <div class="container">
+        <div class="section-head section-head--row">
+          <div>
+            <p class="eyebrow reveal">Competitive formats</p>
+            <h2 class="h2 reveal">There's more than one way <span class="hl">to compete.</span></h2>
+          </div>
+        </div>
+
+        <div class="xp reveal" id="xp" aria-roledescription="carousel" aria-label="Competitive formats">
+          <div class="xp__track">
+            <article class="xp__slide is-active" data-i="0">
+              <img decoding="async" width="900" height="1200" src="assets/img/fmt-1v1.webp" alt="Two traders face to face in a 1v1 duel" loading="lazy">
+              <span class="xp__label"><i>01</i>1v1 / PvP Trading</span>
+              <div class="xp__body">
+                <span class="xp__num">Format 01</span>
+                <h3>1v1 / PvP Trading</h3>
+                <p>Two traders. One competition. One winner.</p>
+                <a href="#updates" class="xp__link">Enter a competition <i>→</i></a>
+              </div>
+            </article>
+            <article class="xp__slide" data-i="1">
+              <img decoding="async" width="900" height="1200" src="assets/img/fmt-team.webp" alt="A trading team at competition terminals" loading="lazy">
+              <span class="xp__label"><i>02</i>Team vs. Team</span>
+              <div class="xp__body">
+                <span class="xp__num">Format 02</span>
+                <h3>Team vs. Team</h3>
+                <p>Organizations compete for team standings and championships.</p>
+                <a href="#updates" class="xp__link">Enter a competition <i>→</i></a>
+              </div>
+            </article>
+            <article class="xp__slide" data-i="2">
+              <img decoding="async" width="900" height="1200" src="assets/img/fmt-tournament.webp" alt="A champion lifting a trophy" loading="lazy">
+              <span class="xp__label"><i>03</i>Tournament Play</span>
+              <div class="xp__body">
+                <span class="xp__num">Format 03</span>
+                <h3>Tournament Play</h3>
+                <p>Structured brackets. Bigger opportunities.</p>
+                <a href="#updates" class="xp__link">Enter a competition <i>→</i></a>
+              </div>
+            </article>
+            <article class="xp__slide" data-i="3">
+              <img decoding="async" width="900" height="1200" src="assets/img/fmt-creator.webp" alt="A creator streaming a trading event" loading="lazy">
+              <span class="xp__label"><i>04</i>Creator &amp; Exhibition Events</span>
+              <div class="xp__body">
+                <span class="xp__num">Format 04</span>
+                <h3>Creator &amp; Exhibition Events</h3>
+                <p>Recognized traders, creators and personalities compete in featured events.</p>
+                <a href="#updates" class="xp__link">Enter a competition <i>→</i></a>
+              </div>
+            </article>
+            <article class="xp__slide" data-i="4">
+              <img decoding="async" width="900" height="1200" src="assets/img/fmt-open.webp" alt="A newcomer walking out to the arena" loading="lazy">
+              <span class="xp__label"><i>05</i>Open Competition</span>
+              <div class="xp__body">
+                <span class="xp__num">Format 05</span>
+                <h3>Open Competition</h3>
+                <p>New competitors can enter events, establish records and begin climbing the rankings.</p>
+                <a href="#updates" class="xp__link">Enter a competition <i>→</i></a>
+              </div>
+            </article>
+          </div>
+          <div class="xp__controls">
+            <button type="button" class="xp__btn" id="xpPrev" aria-label="Previous format">←</button>
+            <div class="xp__dots" id="xpDots" role="tablist"></div>
+            <button type="button" class="xp__btn" id="xpNext" aria-label="Next format">→</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEWS + UPDATES ============ -->
+    <section class="news" id="news">
+      <div class="container">
+        <div class="section-head section-head--row">
+          <div>
+            <p class="eyebrow reveal">Latest from Esports Trading</p>
+            <h2 class="h2 h2--md reveal">News, insight <span class="hl">and rankings.</span></h2>
+          </div>
+          <a href="blog/" class="btn btn--ghost reveal"><span>All news</span><i>→</i></a>
+        </div>
+
+        <div class="posts">
+          <a href="blog/esports-trading-crypto-billion-dollar-industry.html" class="post reveal">
+            <div class="post__media" aria-hidden="true">
+              <img src="assets/img/blog-crypto.webp" alt="" width="1600" height="900" loading="lazy" decoding="async">
+              <span class="post__tag">Industry</span>
+            </div>
+            <div class="post__body">
+              <time datetime="2026-09-26">26 Sep 2026</time>
+              <h3>Esports Trading for Crypto is the next Billion Dollar Industry</h3>
+              <p>Why crypto's always-on markets, native audiences and on-chain transparency make it the launchpad for competitive trading as a sport.</p>
+              <span class="post__link">Read the article <i>→</i></span>
+            </div>
+          </a>
+          <a href="blog/inside-a-1v1-trading-duel.html" class="post reveal" data-delay="120">
+            <div class="post__media" aria-hidden="true">
+              <img src="assets/img/fmt-1v1.webp" alt="" width="900" height="1200" loading="lazy" decoding="async">
+              <span class="post__tag">Formats</span>
+            </div>
+            <div class="post__body">
+              <time datetime="2026-09-26">26 Sep 2026</time>
+              <h3>Inside a 1v1 Trading Duel: fifteen minutes, one chart, one winner</h3>
+              <p>The format, the rules, the scoring, and why the duel is the atom of the sport.</p>
+              <span class="post__link">Read the article <i>→</i></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ UPDATES ============ -->
+    <section class="updates" id="updates">
+      <div class="updates__glow" aria-hidden="true"></div>
+      <div class="container updates__inner reveal">
+        <div class="updates__copy">
+          <p class="eyebrow">Stay informed</p>
+          <h2 class="h2 h2--md">Get Esports Trading <span class="hl">updates</span></h2>
+          <p class="lead">News, events, rankings and more. Join the Movement.</p>
+        </div>
+        <form class="updates__form" id="updatesForm" action="" method="post" novalidate>
+          <div class="updates__row">
+            <label for="email" class="sr-only">Email address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" inputmode="email">
+            <button type="submit" class="btn btn--primary"><span>Subscribe</span></button>
+          </div>
+          <p class="updates__note" id="updatesNote" role="status" aria-live="polite">No spam. Unsubscribe anytime.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ PARTNERS ============ -->
+    <section class="partners" id="partners">
+      <div class="container">
+        <p class="eyebrow eyebrow--center reveal">A strong ecosystem together</p>
+        <h2 class="h2 h2--center reveal">Founding platforms <span class="hl">&amp; partners</span></h2>
+        <div class="partners__row">
+          <a class="partner reveal" data-delay="0" href="https://fatcatarena.com" target="_blank" rel="noopener" aria-label="FatCat Arena">
+            <span class="partner__lockup"><img class="partner__icon" src="assets/partners/fatcat-icon-white.svg" alt=""><img src="assets/partners/fatcat-arena.svg" alt="FatCat Arena"></span>
+            <span>Founding platform</span>
+          </a>
+          <a class="partner reveal" data-delay="100" href="https://www.esportstradingleagues.com/" target="_blank" rel="noopener" aria-label="Esports Trading League">
+            <img src="assets/partners/etl.svg" alt="Esports Trading League">
+            <span>Founding league</span>
+          </a>
+          <div class="partner partner--soon reveal" data-delay="200">
+            <span class="partner__plus">+</span>
+            <span>More to come</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CLOSING ============ -->
+    <section class="closing" id="closing">
+      <div class="closing__bg" aria-hidden="true"></div>
+      <img decoding="async" width="2400" height="1028" class="closing__photo" id="closingPhoto" src="assets/img/arena-wide.webp" alt="" aria-hidden="true" loading="lazy">
+      <div class="closing__beam" style="--r:-22deg" aria-hidden="true"></div>
+      <div class="closing__beam" style="--r:18deg; animation-delay:-4s" aria-hidden="true"></div>
+      <div class="closing__haze" aria-hidden="true"></div>
+      <div class="container closing__inner">
+        <p class="eyebrow reveal">Building the sport of trading</p>
+        <h2 class="closing__title reveal">Every competitive category <span class="hl">begins somewhere.</span></h2>
+        <ol class="closing__steps" aria-label="How a sport forms">
+          <li class="reveal" data-delay="0">Rules are established</li>
+          <li class="reveal" data-delay="80">Players emerge</li>
+          <li class="reveal" data-delay="160">Teams form</li>
+          <li class="reveal" data-delay="240">Rivalries develop</li>
+          <li class="reveal" data-delay="320">Fans watch</li>
+          <li class="reveal" data-delay="400">Champions are crowned</li>
+        </ol>
+        <p class="lead reveal">Esports Trading is building the infrastructure to form the next billion dollar industry.</p>
+        <div class="reveal">
+          <a href="#updates" class="btn btn--primary btn--lg"><span>Be part of what's next</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" id="footer">
+    <div class="footer__bars" aria-hidden="true"></div>
+    <div class="footer__marquee" aria-hidden="true">
+      <div class="footer__marquee-track">
+        <span>Esports Trading</span><i></i><span>Trade</span><i></i><span>Compete</span><i></i><span>Watch</span><i></i><span>Rank</span><i></i>
+        <span>Esports Trading</span><i></i><span>Trade</span><i></i><span>Compete</span><i></i><span>Watch</span><i></i><span>Rank</span><i></i>
+      </div>
+    </div>
+    <div class="container footer__top">
+      <a href="#top" class="footer__logo"><img src="assets/logo/esports-trading.svg" alt="Esports Trading"></a>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="#">About</a>
+        <a href="#">Media</a>
+        <a href="#partners">Partnerships</a>
+        <a href="#updates">Contact</a>
+      </nav>
+      <a href="https://x.com" target="_blank" rel="noopener" class="footer__x" aria-label="Esports Trading on X">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+    </div>
+    <div class="container footer__bottom">
+      <p>© 2026 EsportsTrading.com</p>
+      <p class="footer__legal">Esports Trading is a competitive trading category. Trading and competition may involve financial risk. Availability of particular products, competitions, prizes or financial instruments may vary by jurisdiction.</p>
+      <a href="#top" class="footer__up" aria-label="Back to top">↑</a>
+    </div>
+  </footer>
+
+  <script type="importmap">
+  { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+  </script>
+  <script type="module" src="js/arena.js?v=202609262121"></script>
+  <script src="js/main.js?v=202609262121" defer></script>
+</body>
+</html>
