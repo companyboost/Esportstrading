@@ -3,3 +3,4 @@ Allow: /
 Disallow: /hero-options.html
 
 Sitemap: https://esportstrading.com/sitemap.xml
+Disallow: /og-options.html

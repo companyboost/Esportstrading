@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share Image Options | Esports Trading</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { padding: 60px 0 120px; }
+    .opts { display: grid; gap: 48px; width: min(1240px, 100% - 48px); margin-inline: auto; }
+    .opt__tag { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--fg-2); margin-bottom: 14px; }
+    .opt__tag b { background: var(--acid); color: #000; padding: 6px 10px; font-weight: 700; transform: var(--slant); display: inline-block; }
+    .frame { width: 100%; aspect-ratio: 1200/630; overflow: hidden; border: 1px solid var(--line-2); position: relative; }
+    .frame .og { position: absolute; top: 0; left: 0; transform-origin: top left; }
+    /* fixed 1200x630 canvas */
+    .og { width: 1200px; height: 630px; position: relative; overflow: hidden; background: var(--bg); color: var(--fg); font-family: var(--font-body); }
+    .og * { box-sizing: border-box; }
+    .og__logo { position: absolute; top: 56px; left: 64px; height: 44px; width: auto; }
+    .og__url { position: absolute; bottom: 52px; right: 64px; font-family: var(--font-display); font-size: 18px; letter-spacing: .24em; text-transform: uppercase; color: var(--fg-2); }
+    .og__eyebrow { font-family: var(--font-display); font-size: 18px; letter-spacing: .26em; text-transform: uppercase; color: var(--acid); display: flex; align-items: center; gap: 16px; }
+    .og__eyebrow::before { content: ""; width: 40px; height: 3px; background: var(--acid); }
+    .og h1 { font-family: var(--font-display); font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: -.02em; line-height: .94; margin: 18px 0 0; }
+    .og .hl { color: var(--acid); }
+    .og__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .og__tag { display: inline-block; background: var(--acid); color: #000; font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: .18em; text-transform: uppercase; padding: 12px 18px; transform: var(--slant); }
+
+    /* 1 photo + headline */
+    .og1 .og__photo { opacity: .55; object-position: center 40%; }
+    .og1::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,10,11,.95), rgba(10,10,11,.55) 60%, rgba(10,10,11,.2)), linear-gradient(to top, rgba(10,10,11,.9), transparent 50%); }
+    .og1 .og__body { position: absolute; left: 64px; bottom: 60px; z-index: 2; max-width: 760px; }
+    .og1 h1 { font-size: 88px; }
+    .og1 .og__logo, .og1 .og__url { z-index: 2; }
+
+    /* 2 typographic ticker */
+    .og2 { background: #0A0A0B; }
+    .og2 .band { position: absolute; left: -10%; right: -10%; top: 50%; height: 190px; background: var(--acid); transform: translateY(-50%) rotate(-5deg); }
+    .og2 .ghost { position: absolute; left: 0; right: 0; font-family: var(--font-display); font-weight: 700; font-style: italic; text-transform: uppercase; font-size: 150px; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(244,244,242,.16); white-space: nowrap; }
+    .og2 .ghost.t { top: 30px; } .og2 .ghost.b { bottom: 24px; left: -260px; }
+    .og2 .og__body { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; z-index: 2; }
+    .og2 h1 { font-size: 96px; color: #fff; mix-blend-mode: difference; }
+    .og2 h1 .hl { color: #fff; }
+    .og2 .og__logo { left: 50%; transform: translateX(-50%); }
+    .og2 .og__url { left: 50%; right: auto; transform: translateX(-50%); }
+
+    /* 3 duel split */
+    .og3 .side { position: absolute; top: 0; bottom: 0; width: 52%; overflow: hidden; }
+    .og3 .side.l { left: 0; clip-path: polygon(0 0, 100% 0, calc(100% - 70px) 100%, 0 100%); }
+    .og3 .side.r { right: 0; clip-path: polygon(70px 0, 100% 0, 100% 100%, 0 100%); }
+    .og3 .side img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) brightness(.6); }
+    .og3 .side.r img { object-position: center 20%; }
+    .og3 .vs { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) skewX(-8deg); width: 130px; height: 130px; display: grid; place-items: center; background: var(--acid); color: #000; font-family: var(--font-display); font-weight: 700; font-style: italic; font-size: 56px; box-shadow: 0 0 60px rgba(237,252,13,.5); z-index: 3; }
+    .og3::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,11,.95), transparent 45%); z-index: 2; }
+    .og3 .og__body { position: absolute; left: 64px; right: 64px; bottom: 56px; z-index: 4; display: flex; justify-content: space-between; align-items: flex-end; }
+    .og3 h1 { font-size: 64px; max-width: 700px; }
+    .og3 .og__logo { z-index: 4; }
+
+    /* 4 acid block */
+    .og4 { background: var(--acid); color: #000; }
+    .og4 .mark { position: absolute; right: -60px; top: -40px; height: 720px; width: auto; opacity: .14; filter: brightness(0); }
+    .og4 .og__logo { filter: brightness(0); }
+    .og4 .og__body { position: absolute; left: 64px; bottom: 64px; max-width: 900px; }
+    .og4 .og__eyebrow { color: #000; } .og4 .og__eyebrow::before { background: #000; }
+    .og4 h1 { font-size: 92px; color: #000; }
+    .og4 h1 .hl { color: #fff; text-shadow: 0 2px 0 #000; }
+    .og4 .og__url { color: rgba(0,0,0,.6); }
+
+    /* 5 stage photo, centred */
+    .og5 .og__photo { opacity: .6; object-position: center 45%; }
+    .og5::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 70% at 50% 60%, rgba(10,10,11,.2), rgba(10,10,11,.9)); }
+    .og5 .og__body { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 80px; }
+    .og5 .og__eyebrow::before { display: none; }
+    .og5 h1 { font-size: 92px; }
+    .og5 .og__logo { left: 50%; transform: translateX(-50%); z-index: 2; }
+    .og5 .og__url { left: 50%; right: auto; transform: translateX(-50%); z-index: 2; }
+    .og5 .frame-corner { position: absolute; width: 36px; height: 36px; border: 3px solid var(--acid); z-index: 2; }
+    .og5 .c1 { top: 36px; left: 36px; border-right: 0; border-bottom: 0; } .og5 .c2 { top: 36px; right: 36px; border-left: 0; border-bottom: 0; } .og5 .c3 { bottom: 36px; left: 36px; border-right: 0; border-top: 0; } .og5 .c4 { bottom: 36px; right: 36px; border-left: 0; border-top: 0; }
+
+    /* 6 photo strip */
+    .og6 .strip { position: absolute; right: 0; top: 0; bottom: 0; width: 46%; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; gap: 6px; padding: 6px; transform: skewX(-8deg) translateX(40px); transform-origin: bottom; }
+    .og6 .strip img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) brightness(.75); }
+    .og6::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 50%, rgba(10,10,11,.2)); pointer-events: none; }
+    .og6 .og__body { position: absolute; left: 64px; bottom: 64px; max-width: 560px; z-index: 2; }
+    .og6 h1 { font-size: 72px; }
+    .og6 .og__url { left: 64px; right: auto; bottom: 28px; }
+  </style>
+</head>
+<body>
+  <div class="opts">
+
+    <div>
+      <div class="opt__tag"><b>Option 1</b> Walk-out photo, headline bottom-left</div>
+      <div class="frame"><div class="og og1" id="og1">
+        <img class="og__photo" src="assets/img/fmt-open.jpg" alt="">
+        <img class="og__logo" src="assets/logo/esports-trading.png" alt="">
+        <div class="og__body">
+          <div class="og__eyebrow">Competitive trading, built as a sport</div>
+          <h1>The next <span class="hl">Billion Dollar</span> Competitive Sport.</h1>
+        </div>
+        <div class="og__url">esportstrading.com</div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="opt__tag"><b>Option 2</b> Pure typography, acid band, outlined marquee</div>
+      <div class="frame"><div class="og og2" id="og2">
+        <div class="ghost t">Trade · Compete · Watch · Rank</div>
+        <div class="ghost b">Esports Trading · Esports Trading</div>
+        <div class="band"></div>
+        <img class="og__logo" src="assets/logo/esports-trading.png" alt="">
+        <div class="og__body"><h1>The next Billion Dollar <span class="hl">Competitive Sport.</span></h1></div>
+        <div class="og__url">esportstrading.com</div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="opt__tag"><b>Option 3</b> Duel split with VS badge</div>
+      <div class="frame"><div class="og og3" id="og3">
+        <div class="side l"><img src="assets/img/market-wall.jpg" alt=""></div>
+        <div class="side r"><img src="assets/img/trader-face.jpg" alt=""></div>
+        <div class="vs">VS</div>
+        <img class="og__logo" src="assets/logo/esports-trading.png" alt="">
+        <div class="og__body">
+          <h1>Can you beat <span class="hl">another trader?</span></h1>
+          <span class="og__tag">esportstrading.com</span>
+        </div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="opt__tag"><b>Option 4</b> Acid yellow block with giant E mark</div>
+      <div class="frame"><div class="og og4" id="og4">
+        <img class="mark" src="assets/logo/icon-transparent.svg" alt="">
+        <img class="og__logo" src="assets/logo/esports-trading.png" alt="">
+        <div class="og__body">
+          <div class="og__eyebrow">Trade. Compete. Watch. Rank.</div>
+          <h1>Trading is becoming a <span class="hl">competitive sport.</span></h1>
+        </div>
+        <div class="og__url">esportstrading.com</div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="opt__tag"><b>Option 5</b> Championship stage, centred broadcast frame</div>
+      <div class="frame"><div class="og og5" id="og5">
+        <img class="og__photo" src="assets/img/stage.jpg" alt="">
+        <i class="frame-corner c1"></i><i class="frame-corner c2"></i><i class="frame-corner c3"></i><i class="frame-corner c4"></i>
+        <img class="og__logo" src="assets/logo/esports-trading.png" alt="">
+        <div class="og__body">
+          <div class="og__eyebrow">The market is the arena</div>
+          <h1>The next Billion Dollar <span class="hl">Competitive Sport.</span></h1>
+        </div>
+        <div class="og__url">esportstrading.com</div>
+      </div></div>
+    </div>
+
+    <div>
+      <div class="opt__tag"><b>Option 6</b> Slanted photo mosaic with headline</div>
+      <div class="frame"><div class="og og6" id="og6">
+        <div class="strip">
+          <img src="assets/img/fmt-1v1.jpg" alt=""><img src="assets/img/crowd.jpg" alt="">
+          <img src="assets/img/fmt-team.jpg" alt=""><img src="assets/img/trophy.jpg" alt="">
+          <img src="assets/img/fmt-creator.jpg" alt=""><img src="assets/img/stage.jpg" alt="">
+        </div>
+        <img class="og__logo" src="assets/logo/esports-trading.png" alt="">
+        <div class="og__body">
+          <div class="og__eyebrow">A new category</div>
+          <h1>Where trading skill <span class="hl">meets competition.</span></h1>
+        </div>
+        <div class="og__url">esportstrading.com</div>
+      </div></div>
+    </div>
+
+  </div>
+  <script>
+    function fit() { document.querySelectorAll('.frame').forEach(f => { const s = f.clientWidth / 1200; f.querySelector('.og').style.transform = 'scale(' + s + ')'; }); }
+    addEventListener('resize', fit); fit();
+  </script>
+</body>
+</html>
