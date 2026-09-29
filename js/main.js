@@ -281,6 +281,8 @@
       try {
         const res = await fetch(action, { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify({ ...data, _subject: 'Esports Trading contact: ' + data.topic, _replyto: data.email, _template: 'table', _captcha: 'false' }) });
         if (!res.ok) throw new Error('bad status');
+        const out = await res.json().catch(() => ({}));
+        if (String(out.success) === 'false') throw new Error(out.message || 'rejected');
       } catch (err) { btn.disabled = false; say('Something went wrong. Please try again in a moment.', true); return; }
       cform.classList.add('is-done');
       $('.cform__done', cform).focus();
