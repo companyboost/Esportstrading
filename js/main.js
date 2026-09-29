@@ -260,4 +260,30 @@
       say('You are in. Welcome to the movement.', 'is-ok');
     });
   }
+
+  /* ---------- contact form ---------- */
+  const cform = $('#contactForm');
+  if (cform) {
+    const note = $('#contactNote'), btn = $('button[type="submit"]', cform);
+    const fields = { name: $('#cName'), email: $('#cEmail'), message: $('#cMessage') };
+    const defaultNote = note.textContent;
+    const say = (msg, err) => { note.textContent = msg; note.classList.toggle('is-error', !!err); };
+    Object.values(fields).forEach(f => f.addEventListener('input', () => { f.classList.remove('is-invalid'); if (note.classList.contains('is-error')) say(defaultNote); }));
+    cform.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = { name: fields.name.value.trim(), email: fields.email.value.trim(), company: $('#cCompany').value.trim(), topic: $('#cTopic').value, message: fields.message.value.trim() };
+      const bad = !data.name ? fields.name : !/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(data.email) ? fields.email : !data.message ? fields.message : null;
+      if (bad) { bad.classList.add('is-invalid'); bad.focus(); say(bad === fields.email ? 'That email address does not look right. Please check it.' : 'Please fill in your name, email and message.', true); return; }
+      if ($('#cHp').value) return;
+      const action = cform.getAttribute('action');
+      if (!action) { say('The contact form is not connected yet. Please try again soon.', true); return; }
+      btn.disabled = true; say('Sending...');
+      try {
+        const res = await fetch(action, { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify({ ...data, _subject: 'Esports Trading contact: ' + data.topic, _replyto: data.email, _template: 'table', _captcha: 'false' }) });
+        if (!res.ok) throw new Error('bad status');
+      } catch (err) { btn.disabled = false; say('Something went wrong. Please try again in a moment.', true); return; }
+      cform.classList.add('is-done');
+      $('.cform__done', cform).focus();
+    });
+  }
 })();
