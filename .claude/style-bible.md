@@ -39,3 +39,4 @@
   - trader-face.jpg (tCLL1YcmZJ) confident trader portrait, versus right
   - stage.jpg (gOnn2FdSXO) championship stage, league background + orbit Leagues
   - hands.jpg (MBHHEZkDCm) hands on keyboard, orbit Platforms
+- X cover (2026-09-29, Jesse request): ../eSport Trading League/output/x-cover-esports-trading/ (1500x500 + 3000x1000). arena-wide.jpg bg, main logo centered, 'INDUSTRY NEWS / ECOSYSTEM / START A NEW CAREER' in Chakra Petch with yellow slanted bars. Rebuild via cover.html + headless Chrome.

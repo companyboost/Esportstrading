@@ -1,0 +1,12 @@
+{
+  "default_target": "production",
+  "targets": {
+    "production": {
+      "steps": [
+        "git push origin main"
+      ],
+      "verify": "sha=$(git rev-parse HEAD); st=; for i in $(seq 1 18); do u=$(gh api \"repos/companyboost/Esportstrading/deployments?sha=$sha\" --jq '.[0].statuses_url // empty'); [ -n \"$u\" ] && st=$(gh api \"$u\" --jq '.[0].state // empty'); [ \"$st\" = success ] || [ \"$st\" = failure ] || [ \"$st\" = error ] && break; sleep 10; done; echo \"vercel deploy: ${st:-not found}\"; curl -s -o /dev/null -w \"site: %{http_code}\\n\" https://esportstrading.vercel.app/"
+    }
+  },
+  "notes": "Static site, no build step. Pushing main to companyboost/Esportstrading auto-deploys to Vercel production (esportstrading.vercel.app) through the Git integration, so there is no vercel CLI step and no staging. John pushes straight to main once he approves a change, so no confirm prompt. Push as the companyboost GitHub account; the other accounts on this Mac have no push rights. Options pages (*-options.html) and their assets ship too, so John can review them on his phone."
+}
